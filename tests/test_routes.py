@@ -146,4 +146,10 @@ class TestAccountService(TestCase):
         self.assertIsNotNone(response_data)
         self.assertIn("message", response_data)
         self.assertEqual(response_data["message"], f"404 Not Found: Account with id [{account_id}] could not be found.")
+
+    def test_delete_account(self):
+        """It should Delete an Account"""
+        account = self._create_accounts(1)[0]
+        resp = self.client.delete(f"{BASE_URL}/{account.id}")
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
         
