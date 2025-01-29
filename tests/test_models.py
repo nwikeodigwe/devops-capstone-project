@@ -6,7 +6,7 @@ import logging
 import unittest
 import os
 from service import app
-from service.models import Account, DataValidationError, db
+from service.models import Account, DataValidationError, db, PersistentBase
 from tests.factories import AccountFactory
 
 DATABASE_URI = os.getenv(
@@ -45,6 +45,11 @@ class TestAccount(unittest.TestCase):
     ######################################################################
     #  T E S T   C A S E S
     ######################################################################
+
+    def test_persistent_base_initialization(self):
+        """It should initialize a PersistentBase object with id set to None"""
+        instance = PersistentBase()
+        self.assertIsNone(instance.id, "The id should be initialized as None.")
 
     def test_create_an_account(self):
         """It should Create an Account and assert that it exists"""
