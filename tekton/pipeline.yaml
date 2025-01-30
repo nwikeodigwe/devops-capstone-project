@@ -15,6 +15,7 @@ spec:
     - name: repo-url
     - name: branch
       default: main
+    - name: build-image
   tasks:
     - name: init
       workspaces:
@@ -50,9 +51,9 @@ spec:
         value: ["--count","--max-complexity=10","--max-line-length=127","--statistics"]
       runAfter:
         - clone
-        
+
     - name: test
-      workspace:
+      workspaces:
         - name: source
           workspace: pipeline-workspace
       taskRef:
@@ -64,3 +65,17 @@ spec:
         value: "-v --with-specs --with-specs"
       runAfter:
         - clone
+
+    - name: build
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      params:
+      - name: IMAGE
+        value: "$(params.build-image)"
+      runAfter:
+        - test
+        - lint
