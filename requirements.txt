@@ -13,7 +13,6 @@ flask-cors==5.0.0
 # Runtime dependencies
 gunicorn==20.1.0
 honcho==1.1.0
-black==25.1.0
 
 # Code quality
 pylint==2.14.0
